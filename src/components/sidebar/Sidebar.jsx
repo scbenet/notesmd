@@ -1,23 +1,20 @@
-import { useState } from 'react';
-import { Stack, Button, TextInput } from '@mantine/core';
-import { IconPlus } from '@tabler/icons-react';
+import { useState } from "react";
+import { Stack, Button, TextInput } from "@mantine/core";
+import { IconPlus } from "@tabler/icons-react";
 
-import NoteList from './NoteList';
+import NoteList from "./NoteList";
 
 function Sidebar() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   return (
-    <Stack spacing="md">
-      <Button 
-        leftIcon={<IconPlus size={16} />} 
-        fullWidth
-      >
+    <Stack spacing='md'>
+      <Button leftIcon={<IconPlus size={16} />} fullWidth>
         New Note
       </Button>
-      
+
       <TextInput
-        placeholder="Search notes..."
+        placeholder='Search notes...'
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

@@ -1,10 +1,29 @@
+import {
+  MantineProvider,
+  localStorageColorSchemeManager,
+  useMantineColorScheme,
+  useComputedColorScheme,
+} from "@mantine/core";
+import { theme } from "./theme";
 
-import { MantineProvider } from '@mantine/core';
-import Layout from './components/Layout';
+import Layout from "./components/Layout";
+
+import "@mantine/core/styles.css";
+import "@mantine/tiptap/styles.css";
 
 function App() {
+  const colorSchemeManager = localStorageColorSchemeManager({
+    key: "notesmd-color-scheme",
+  });
+
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS theme={{ colorScheme: 'light' }}>
+    <MantineProvider
+      theme={theme}
+      colorSchemeManager={colorSchemeManager}
+      defaultColorScheme={"auto"}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <Layout />
     </MantineProvider>
   );

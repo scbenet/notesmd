@@ -1,16 +1,35 @@
-import { RichTextEditor, Link } from '@mantine/tiptap';
-import { useEditor } from '@tiptap/react';
-import Highlight from '@tiptap/extension-highlight';
-import StarterKit from '@tiptap/starter-kit';
-import Underline from '@tiptap/extension-underline';
-import TextAlign from '@tiptap/extension-text-align';
-import Superscript from '@tiptap/extension-superscript';
-import SubScript from '@tiptap/extension-subscript';
+import { RichTextEditor, Link } from "@mantine/tiptap";
+import { useEditor } from "@tiptap/react";
+import Highlight from "@tiptap/extension-highlight";
+import StarterKit from "@tiptap/starter-kit";
+import Underline from "@tiptap/extension-underline";
+import TextAlign from "@tiptap/extension-text-align";
+import Superscript from "@tiptap/extension-superscript";
+import SubScript from "@tiptap/extension-subscript";
+import Placeholder from "@tiptap/extension-placeholder";
+import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight';
+import css from 'highlight.js/lib/languages/css';
+import js from 'highlight.js/lib/languages/javascript';
+import html from 'highlight.js/lib/languages/xml';
+import bash from 'highlight.js/lib/languages/bash';
+import yaml from 'highlight.js/lib/languages/yaml';
+import json from 'highlight.js/lib/languages/json';
+import python from 'highlight.js/lib/languages/python';
+import { createLowlight } from 'lowlight';
 
-const content =
-  'Your notes here...';
+const lowlight = createLowlight();
 
-export default function Demo() {
+lowlight.register('css', css);
+lowlight.register('html', html);
+lowlight.register('js', js);
+lowlight.register('python', python);
+lowlight.register('bash', bash);
+lowlight.register('yaml', yaml);
+lowlight.register('json', json);
+
+const content = "";
+
+export default function Editor() {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -19,7 +38,11 @@ export default function Demo() {
       Superscript,
       SubScript,
       Highlight,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Placeholder.configure({ placeholder: "Your text here..." }),
+      CodeBlockLowlight.configure({
+        lowlight,
+      })
     ],
     content,
   });
@@ -34,7 +57,7 @@ export default function Demo() {
           <RichTextEditor.Strikethrough />
           <RichTextEditor.ClearFormatting />
           <RichTextEditor.Highlight />
-          <RichTextEditor.Code />
+          <RichTextEditor.CodeBlock />
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
@@ -45,12 +68,9 @@ export default function Demo() {
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
-          <RichTextEditor.Blockquote />
           <RichTextEditor.Hr />
           <RichTextEditor.BulletList />
           <RichTextEditor.OrderedList />
-          <RichTextEditor.Subscript />
-          <RichTextEditor.Superscript />
         </RichTextEditor.ControlsGroup>
 
         <RichTextEditor.ControlsGroup>
