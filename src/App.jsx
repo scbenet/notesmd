@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 
 import "@mantine/core/styles.css";
 import "@mantine/tiptap/styles.css";
+import "./styles/App.css";
 
 function App() {
   const colorSchemeManager = localStorageColorSchemeManager({

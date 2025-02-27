@@ -18,7 +18,7 @@ function Header({ opened, toggle }) {
     <Group h='100%' px='md' justify='space-between'>
       <Group>
         <Burger opened={opened} onClick={toggle} hiddenFrom='sm' size='sm' />
-        <Title order={2}>Notesmd</Title>
+        <Title order={1}>notes.md</Title>
         <Text>Edit markdown and take notes</Text>
       </Group>
 
