@@ -1,9 +1,4 @@
-import {
-  MantineProvider,
-  localStorageColorSchemeManager,
-  useMantineColorScheme,
-  useComputedColorScheme,
-} from "@mantine/core";
+import { MantineProvider, localStorageColorSchemeManager } from "@mantine/core";
 import { theme } from "./theme";
 
 import Layout from "./components/Layout";

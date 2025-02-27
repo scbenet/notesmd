@@ -9,7 +9,7 @@ function Sidebar() {
 
   return (
     <Stack spacing='md'>
-      <Button leftIcon={<IconPlus size={16} />} fullWidth>
+      <Button leftSection={<IconPlus size={16} />} fullWidth>
         New Note
       </Button>
 
