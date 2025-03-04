@@ -7,12 +7,11 @@ import {
 import { IconPlus } from "@tabler/icons-react";
 
 import NoteList from "./NoteList";
-import { useNotes } from "../../context/NotesContext";
-
+import useNotesStore from "../../store/notesStore";
 
 function Sidebar() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { createNote } = useNotes();
+  const createNote = useNotesStore(state => state.createNote);
 
   return (
     <Stack spacing='md'>

@@ -4,19 +4,18 @@ import {
   Text, 
   Group, 
   ActionIcon, 
-  Tooltip, 
   Modal,
   Button,
   Box,
   useMantineColorScheme 
 } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
-import { useNotes } from '../../context/NotesContext';
+import useNotesStore from '../../store/notesStore';
 
 function NoteItem({ note, isSelected, onSelect }) {
   const [showDeleteIcon, setShowDeleteIcon] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const { deleteNote } = useNotes();
+  const deleteNote = useNotesStore(state => state.deleteNote);
   const { colorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';
   
@@ -70,18 +69,16 @@ function NoteItem({ note, isSelected, onSelect }) {
           </Text>
           
           <Box style={{ width: 24, flexShrink: 0, opacity: showDeleteIcon ? 1 : 0 }}>
-            <Tooltip label="Delete note">
-              <ActionIcon 
-                color="red"
-                variant="subtle" 
-                radius="xl"
-                size="sm"
-                onClick={handleDeleteClick}
-                style={{ visibility: showDeleteIcon ? 'visible' : 'hidden' }}
-              >
-                <IconX size={14} />
-              </ActionIcon>
-            </Tooltip>
+            <ActionIcon 
+              variant="subtle" 
+              radius="xl"
+              size="sm"
+              onClick={handleDeleteClick}
+              style={{ visibility: showDeleteIcon ? 'visible' : 'hidden' }}
+              title="Delete note"
+            >
+              <IconX size={14} />
+            </ActionIcon>
           </Box>
         </Group>
       </Paper>

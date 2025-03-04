@@ -1,10 +1,13 @@
 import { Stack, Text, LoadingOverlay } from "@mantine/core";
 
 import NoteItem from "./NoteItem";
-import { useNotes } from "../../context/NotesContext";
+import useNotesStore from "../../store/notesStore";
 
 function NoteList({ searchQuery }) {
-  const { notes, currentNote, selectNote, loading } = useNotes();
+  const notes = useNotesStore(state => state.notes);
+  const currentNote = useNotesStore(state => state.currentNote);
+  const selectNote = useNotesStore(state => state.selectNote);
+  const loading = useNotesStore(state => state.loading);
   
   // Filter notes based on search query
   const filteredNotes = notes.filter(note => 
@@ -14,7 +17,7 @@ function NoteList({ searchQuery }) {
   return (
     <Stack spacing='xs' style={{ position: 'relative' }}>
       <LoadingOverlay visible={loading} />
-      <Text size='sm' weight={500} color='dimmed'>
+      <Text size='sm' fw={500} c='dimmed'>
         Your Notes
       </Text>
       {filteredNotes.map((note) => (

@@ -22,7 +22,7 @@ import { createLowlight } from "lowlight";
 import { IconPlus } from "@tabler/icons-react";
 
 import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
-import { useNotes } from "../../context/NotesContext";
+import useNotesStore from "../../store/notesStore";
 
 const lowlight = createLowlight();
 
@@ -36,7 +36,9 @@ lowlight.register("json", json);
 
 
 export default function Editor() {
-  const { currentNote, updateNote, createNote } = useNotes();
+  const currentNote = useNotesStore(state => state.currentNote);
+  const updateNote = useNotesStore(state => state.updateNote);
+  const createNote = useNotesStore(state => state.createNote);
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ codeBlock: false }),
