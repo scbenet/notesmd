@@ -34,7 +34,6 @@ lowlight.register("bash", bash);
 lowlight.register("yaml", yaml);
 lowlight.register("json", json);
 
-const content = "";
 
 export default function Editor() {
   const { currentNote, updateNote, createNote } = useNotes();

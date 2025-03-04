@@ -26,7 +26,7 @@ function NoteList({ searchQuery }) {
         />
       ))}
       {filteredNotes.length === 0 && !loading && (
-        <Text size='sm' color='dimmed'>
+        <Text size='sm' c='dimmed'>
           No notes found
         </Text>
       )}

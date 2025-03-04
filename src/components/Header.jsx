@@ -1,6 +1,5 @@
 import {
   Title,
-  Text,
   Group,
   Burger,
   ActionIcon,
