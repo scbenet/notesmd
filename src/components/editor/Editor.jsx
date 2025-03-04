@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+
+import { Text, Box, Center, Paper, Stack, Button } from "@mantine/core";
 import { RichTextEditor, Link } from "@mantine/tiptap";
 import { useEditor } from "@tiptap/react";
 import Highlight from "@tiptap/extension-highlight";
@@ -16,6 +19,10 @@ import yaml from "highlight.js/lib/languages/yaml";
 import json from "highlight.js/lib/languages/json";
 import python from "highlight.js/lib/languages/python";
 import { createLowlight } from "lowlight";
+import { IconPlus } from "@tabler/icons-react";
+
+import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
+import { useNotes } from "../../context/NotesContext";
 
 const lowlight = createLowlight();
 
@@ -30,6 +37,7 @@ lowlight.register("json", json);
 const content = "";
 
 export default function Editor() {
+  const { currentNote, updateNote, createNote } = useNotes();
   const editor = useEditor({
     extensions: [
       StarterKit.configure({ codeBlock: false }),
@@ -44,10 +52,50 @@ export default function Editor() {
         lowlight,
       }),
     ],
-    content,
+    content: currentNote?.content || "",
+    onUpdate: ({ editor }) => {
+      saveContent(editor.getHTML());
+    },
   });
 
+  // Set editor content when current note changes
+  useEffect(() => {
+    if (editor && currentNote) {
+      // Only set content if it's different to avoid selection/cursor jumps
+      const currentContent = editor.getHTML();
+      if (currentContent !== currentNote.content) {
+        editor.commands.setContent(currentNote.content || "");
+      }
+    }
+  }, [editor, currentNote]);
+
+  // Debounced save to avoid too many updates
+  const saveContent = useDebouncedCallback((content) => {
+    if (currentNote) {
+      updateNote(currentNote.id, { content });
+    }
+  }, 500);
+
+  if (!currentNote) {
+    return (
+      <Center style={{ height: "100%" }}>
+        <Paper p='xl' withBorder shadow='md'>
+          <Stack align='center' spacing='lg'>
+            <Text>No note selected</Text>
+            <Button
+              leftSection={<IconPlus size={16} />}
+              onClick={() => createNote()}
+            >
+              Create a new note
+            </Button>
+          </Stack>
+        </Paper>
+      </Center>
+    );
+  }
+
   return (
+    <Box>
     <RichTextEditor editor={editor}>
       <RichTextEditor.Toolbar sticky stickyOffset={60}>
         <RichTextEditor.ControlsGroup>
@@ -93,5 +141,6 @@ export default function Editor() {
 
       <RichTextEditor.Content />
     </RichTextEditor>
+    </Box>
   );
 }

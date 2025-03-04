@@ -9,6 +9,9 @@ export default defineConfig({
   plugins: [
     react(),
   ],
+  server: {
+    open: true,
+  },
   resolve: {
     alias: {
       // /esm/icons/index.mjs only exports the icons statically, so no separate chunks are created

@@ -19,7 +19,6 @@ function Header({ opened, toggle }) {
       <Group>
         <Burger opened={opened} onClick={toggle} hiddenFrom='sm' size='sm' />
         <Title order={1}>notes.md</Title>
-        <Text>Edit markdown and take notes</Text>
       </Group>
 
       <ActionIcon

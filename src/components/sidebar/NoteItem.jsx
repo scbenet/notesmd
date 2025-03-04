@@ -1,6 +1,6 @@
 import { Paper, Text, Group } from '@mantine/core';
 
-function NoteItem({ note }) {
+function NoteItem({ note, isSelected, onSelect }) {
   const formattedDate = new Date(note.updatedAt).toLocaleDateString();
   
   return (
@@ -9,10 +9,18 @@ function NoteItem({ note }) {
       withBorder 
       sx={(theme) => ({
         cursor: 'pointer',
+        backgroundColor: isSelected 
+          ? theme.colorScheme === 'dark' 
+            ? theme.colors.dark[5] 
+            : theme.colors.gray[1]
+          : 'transparent',
         '&:hover': {
-          backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+          backgroundColor: theme.colorScheme === 'dark' 
+            ? theme.colors.dark[6] 
+            : theme.colors.gray[0],
         },
       })}
+      onClick={() => onSelect(note.id)}
     >
       <Group position="apart">
         <Text size="sm" weight={500}>{note.title}</Text>

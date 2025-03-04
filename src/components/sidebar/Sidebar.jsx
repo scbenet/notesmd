@@ -1,15 +1,26 @@
 import { useState } from "react";
-import { Stack, Button, TextInput } from "@mantine/core";
+import { 
+  Stack, 
+  Button, 
+  TextInput,
+} from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 
 import NoteList from "./NoteList";
+import { useNotes } from "../../context/NotesContext";
+
 
 function Sidebar() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { createNote } = useNotes();
 
   return (
     <Stack spacing='md'>
-      <Button leftSection={<IconPlus size={16} />} fullWidth>
+      <Button 
+        leftSection={<IconPlus size={16} />} 
+        fullWidth
+        onClick={() => createNote()}
+      >
         New Note
       </Button>
 
