@@ -41,7 +41,7 @@ function NoteItem({ note, isSelected, onSelect }) {
         withBorder 
         style={{
           borderLeft: isSelected 
-            ? `3px solid var(--mantine-color-indigo-${isDark ? '5' : '6'})` 
+            ? `3px solid var(--mantine-primary-color-${isDark ? '5' : '6'})` 
             : '3px solid transparent',
           transition: 'all 0.2s ease',
           position: 'relative',
@@ -73,6 +73,7 @@ function NoteItem({ note, isSelected, onSelect }) {
               variant="subtle" 
               radius="xl"
               size="sm"
+              color="light"
               onClick={handleDeleteClick}
               style={{ visibility: showDeleteIcon ? 'visible' : 'hidden' }}
               title="Delete note"

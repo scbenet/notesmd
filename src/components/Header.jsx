@@ -26,6 +26,7 @@ function Header({ opened, toggle }) {
   const [title, setTitle] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isHoveringTitle, setIsHoveringTitle] = useState(false);
   
   // Update local title when current note changes
   useEffect(() => {
@@ -83,20 +84,38 @@ function Header({ opened, toggle }) {
             <TextInput
               value={title}
               onChange={handleTitleChange}
-              onBlur={() => setIsEditing(false)}
-              onKeyDown={(e) => e.key === 'Enter' && setIsEditing(false)}
+              onBlur={() => {
+                setIsEditing(false);
+                setIsHoveringTitle(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setIsEditing(false);
+                  setIsHoveringTitle(false);
+                }
+              }}
               autoFocus
               style={{ width: 'auto', maxWidth: '400px' }}
             />
           ) : (
-            <Group onClick={() => setIsEditing(true)} style={{ cursor: 'pointer' }} wrap="nowrap">
-              <Title order={4} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {title || 'Untitled Note'}
-              </Title>
-              <ActionIcon size="sm" variant="subtle">
-                <IconPencil size="0.9rem" />
-              </ActionIcon>
-            </Group>
+            <Box
+              style={{ position: 'relative', cursor: 'pointer' }}
+              onClick={() => setIsEditing(true)}
+              onMouseEnter={() => setIsHoveringTitle(true)}
+              onMouseLeave={() => setIsHoveringTitle(false)}
+            >
+              <Group wrap="nowrap" gap="xs">
+                <Title order={4} style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {title || 'Untitled Note'}
+                </Title>
+                
+                {isHoveringTitle && (
+                  <ActionIcon size="sm" variant="subtle" color="light">
+                    <IconPencil size="0.9rem" />
+                  </ActionIcon>
+                )}
+              </Group>
+            </Box>
           )}
         </Flex>
       ) : (
